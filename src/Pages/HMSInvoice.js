@@ -316,11 +316,6 @@ const HMSInvoice = () => {
     pdf.setFontSize(14);
     pdf.setTextColor(0, 0, 0);
 
-
- 
-
-
-
     // Remove spaces and special characters from name and mobile
     const sanitizedName = formData.name.replace(/[^a-zA-Z0-9]/g, "");
     const sanitizedMobile = formData.mobile.replace(/[^0-9]/g, "");
