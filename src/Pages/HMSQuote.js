@@ -12,6 +12,10 @@ import { BrowserRouter as Router,Routes, Route, Link } from 'react-router-dom';
 function HMSQuote() {
 
   const [formData, setFormData] = useState({
+    no1Rate: "",no2Rate: "",no3Rate: "",no4Rate: "",no5Rate: "",no6Rate: "",no7Rate: "",no8Rate: "",
+    no9Rate: "",no10Rate: "",no11Rate: "",no12Rate: "",no13Rate: "",no14Rate: "",no15Rate: "",no16Rate: "",
+    no17Rate: "",no18Rate: "",no19Rate: "",no20Rate: "",
+    
     transportChrFull: "",
     transportChrPart: "",
     carChrPart: "",

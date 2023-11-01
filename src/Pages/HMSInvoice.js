@@ -11,19 +11,21 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 const HMSInvoice = () => {
   const [formData, setFormData] = useState({
-    transportCharges: "",
-    from: "",
-    toLocation: "",
-    storageCharges: "",
-    insurance: "",
+    no1Rate: "",no2Rate: "",no3Rate: "",no4Rate: "",no5Rate: "",no6Rate: "",no7Rate: "",no8Rate: "",
+    no9Rate: "",no10Rate: "",no11Rate: "",no12Rate: "",no13Rate: "",no14Rate: "",no15Rate: "",no16Rate: "",
+    no17Rate: "",no18Rate: "",no19Rate: "",no20Rate: "",
+
+    no1Item: "",no2Item: "",no3Item: "",no4Item: "",no5Item: "",no6Item: "",no7Item: "",no8Item: "",
+    no9Item: "",no10Item: "",no11Item: "",no12Item: "",no13Item: "",no14Item: "",no15Item: "",no16Item: "",
+    no17Item: "",no18Item: "",no19Item: "",no20Item: "",
+
+    qty1: "", qty2: "", qty3: "", qty4: "", qty5: "", qty6: "", qty7: "", qty8: "", qty9: "", qty10: "",
+    qty11: "", qty12: "", qty13: "", qty14: "", qty15: "", qty16: "", qty17: "", qty18: "", qty19: "", qty20: "",
+    amount1: "",
+    amount2: "",
     name: "",
     mobile: "",
     address: "",
-    email: "",
-    dateOfoPacking: "",
-    gst: "",
-    docCharges: "",
-    description: "",
   });
 
   const handleInputChange = (event) => {
@@ -38,19 +40,20 @@ const HMSInvoice = () => {
 
   const handleClear = () => {
     setFormData({
-      transportCharges: "",
-      from: "",
-      toLocation: "",
-      storageCharges: "",
-      insurance: "",
+      no1Rate: "",no2Rate: "",no3Rate: "",no4Rate: "",no5Rate: "",no6Rate: "",no7Rate: "",no8Rate: "",
+    no9Rate: "",no10Rate: "",no11Rate: "",no12Rate: "",no13Rate: "",no14Rate: "",no15Rate: "",no16Rate: "",
+    no17Rate: "",no18Rate: "",no19Rate: "",no20Rate: "",
+
+    no1Item: "",no2Item: "",no3Item: "",no4Item: "",no5Item: "",no6Item: "",no7Item: "",no8Item: "",
+    no9Item: "",no10Item: "",no11Item: "",no12Item: "",no13Item: "",no14Item: "",no15Item: "",no16Item: "",
+    no17Item: "",no18Item: "",no19Item: "",no20Item: "",
+
+    qty1: "", qty2: "", qty3: "", qty4: "", qty5: "", qty6: "", qty7: "", qty8: "", qty9: "", qty10: "",
+    qty11: "", qty12: "", qty13: "", qty14: "", qty15: "", qty16: "", qty17: "", qty18: "", qty19: "", qty20: "",
       name: "",
       mobile: "",
       address: "",
-      email: "",
-      dateOfoPacking: "",
-      gst: "",
-      docCharges: "",
-      description: "",
+  
     });
   };
 
@@ -93,7 +96,6 @@ const HMSInvoice = () => {
     // Set text color to white
     pdf.setTextColor(255, 255, 255); // White color
     pdf.text(`C`, 133, 30);
-
     pdf.setTextColor(0, 0, 0);
     pdf.setFontSize(10);
     pdf.setFont(undefined, "none");
@@ -142,7 +144,11 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no1Item}`, 30, 78);
     pdf.text(`${formData.no1Rate}`, 116, 78);
     pdf.text(`${formData.qty1}`, 143, 78);
-    pdf.text(`900`, 170, 78);
+    let amount1 = formData.no1Rate * formData.qty1
+    if (isNaN(amount1) || amount1=== 0) {
+      amount1 = "";
+    }
+    pdf.text(`${amount1}`, 170, 78);
 
     //1
     pdf.rect(12, 66, 14, 7);
@@ -159,8 +165,13 @@ const HMSInvoice = () => {
     pdf.text(`02`, 17, 85);
     pdf.text(`${formData.no2Item}`, 30, 85);
     pdf.text(`${formData.no2Rate}`, 116, 85);
-    pdf.text(`${formData.qty2}`, 143, 85);
-    pdf.text(`900`, 170, 85);
+    pdf.text(`${formData.qty2}`, 143, 85); 
+   
+    let amount2 = formData.no2Rate * formData.qty2;
+    if (isNaN(amount2) || amount2 === 0) {
+      amount2 = "";
+    }
+    pdf.text(`${amount2}`, 170, 85);
     //3
     pdf.rect(12, 87, 14, 7);
     pdf.rect(26, 87, 82, 7);
@@ -171,7 +182,12 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no3Item}`, 30, 92);
     pdf.text(`${formData.no3Rate}`, 116, 92);
     pdf.text(`${formData.qty3}`, 143, 92);
-    pdf.text(`900`, 170, 92);
+    let amount3 = formData.no3Rate * formData.qty3
+    if (isNaN(amount3) || amount3=== 0) {
+      amount3 = "";
+    }
+    pdf.text(`${amount3}`, 170, 92);
+
     //4
     pdf.rect(12, 87, 14, 7);
     pdf.rect(26, 87, 82, 7);
@@ -182,7 +198,11 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no4Item}`, 30, 99);
     pdf.text(`${formData.no4Rate}`, 116, 99);
     pdf.text(`${formData.qty4}`, 143, 99);
-    pdf.text(`900`, 170, 99);
+    let amount4 = formData.no4Rate * formData.qty4
+    if (isNaN(amount4) || amount4=== 0) {
+      amount4 = "";
+    }
+    pdf.text(`${amount4}`, 170, 99);
     //5
     pdf.rect(12, 87, 14, 7);
     pdf.rect(26, 87, 82, 7);
@@ -193,7 +213,13 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no5Item}`, 30, 106);
     pdf.text(`${formData.no5Rate}`, 116, 106);
     pdf.text(`${formData.qty5}`, 143, 106);
-    pdf.text(`900`, 170, 106);
+
+    let amount5 = formData.no5Rate * formData.qty5
+    if (isNaN(amount5) || amount5=== 0) {
+      amount5 = "";
+    }
+
+    pdf.text(`${amount5}`, 170, 106);
     //6
     pdf.rect(12, 94, 14, 7);
     pdf.rect(26, 94, 82, 7);
@@ -204,7 +230,13 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no6Item}`, 30, 113);
     pdf.text(`${formData.no6Rate}`, 116, 113);
     pdf.text(`${formData.qty6}`, 143, 113);
-    pdf.text(`900`, 170, 113);
+
+    let amount6 = formData.no6Rate * formData.qty6
+    if (isNaN(amount6) || amount6=== 0) {
+      amount6 = "";
+    }
+
+    pdf.text(`${amount5}`, 170, 113);
     //7
     pdf.rect(12, 101, 14, 7);
     pdf.rect(26, 101, 82, 7);
@@ -215,7 +247,12 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no7Item}`, 30, 120);
     pdf.text(`${formData.no7Rate}`, 116, 120);
     pdf.text(`${formData.qty7}`, 143, 120);
-    pdf.text(`900`, 170, 120);
+
+    let amount7 = formData.no7Rate * formData.qty7
+    if (isNaN(amount7) || amount7=== 0) {
+      amount7 = "";
+    }
+    pdf.text(`${amount7}`, 170, 120);
     //8
     pdf.rect(12, 108, 14, 7);
     pdf.rect(26, 108, 82, 7);
@@ -226,7 +263,12 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no8Item}`, 30, 127);
     pdf.text(`${formData.no8Rate}`, 116, 127);
     pdf.text(`${formData.qty8}`, 143, 127);
-    pdf.text(`900`, 170, 127);
+
+    let amount8 = formData.no8Rate * formData.qty8
+    if (isNaN(amount8) || amount8=== 0) {
+      amount8 = "";
+    }
+    pdf.text(`${amount8}`, 170, 127);
     //9
     pdf.rect(12, 115, 14, 7);
     pdf.rect(26, 115, 82, 7);
@@ -237,7 +279,12 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no9Item}`, 30, 134);
     pdf.text(`${formData.no9Rate}`, 116, 134);
     pdf.text(`${formData.qty9}`, 143, 134);
-    pdf.text(`900`, 170, 134);
+
+    let amount9 = formData.no9Rate * formData.qty9
+    if (isNaN(amount9) || amount9=== 0) {
+      amount9 = "";
+    }
+    pdf.text(`${amount9}`, 170, 134);
     //10
     pdf.rect(12, 122, 14, 7);
     pdf.rect(26, 122, 82, 7);
@@ -248,7 +295,12 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no10Item}`, 30, 141);
     pdf.text(`${formData.no10Rate}`, 116, 141);
     pdf.text(`${formData.qty10}`, 143, 141);
-    pdf.text(`900`, 170, 141);
+
+    let amount10 = formData.no10Rate * formData.qty10
+    if (isNaN(amount10) || amount10=== 0) {
+      amount10 = "";
+    }
+    pdf.text(`${amount10}`, 170, 141);
     //11
     pdf.rect(12, 129, 14, 7);
     pdf.rect(26, 129, 82, 7);
@@ -259,7 +311,12 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no11Item}`, 30, 148);
     pdf.text(`${formData.no11Rate}`, 116, 148);
     pdf.text(`${formData.qty11}`, 143, 148);
-    pdf.text(`900`, 170, 148);
+
+    let amount11 = formData.no11Rate * formData.qty11
+    if (isNaN(amount11) || amount11=== 0) {
+      amount11 = "";
+    }
+    pdf.text(`${amount11}`, 170, 148);
     //12
     pdf.rect(12, 136, 14, 7);
     pdf.rect(26, 136, 82, 7);
@@ -270,7 +327,12 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no12Item}`, 30, 155);
     pdf.text(`${formData.no12Rate}`, 116, 155);
     pdf.text(`${formData.qty12}`, 143, 155);
-    pdf.text(`900`, 170, 155);
+
+    let amount12 = formData.no12Rate * formData.qty12
+    if (isNaN(amount12) || amount12=== 0) {
+      amount12 = "";
+    }
+    pdf.text(`${amount12}`, 170, 155);
     //13
     pdf.rect(12, 143, 14, 7);
     pdf.rect(26, 143, 82, 7);
@@ -281,7 +343,12 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no13Item}`, 30, 162);
     pdf.text(`${formData.no13Rate}`, 116, 162);
     pdf.text(`${formData.qty13}`, 143, 162);
-    pdf.text(`900`, 170, 162);
+
+    let amount13 = formData.no13Rate * formData.qty13
+    if (isNaN(amount13) || amount13=== 0) {
+      amount13 = "";
+    }
+    pdf.text(`${amount13}`, 170, 162);
     //14
     pdf.rect(12, 150, 14, 7);
     pdf.rect(26, 150, 82, 7);
@@ -292,7 +359,12 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no14Item}`, 30, 169);
     pdf.text(`${formData.no14Rate}`, 116, 169);
     pdf.text(`${formData.qty14}`, 143, 169);
-    pdf.text(`900`, 170, 169);
+
+    let amount14 = formData.no14rRate * formData.qty14
+    if (isNaN(amount14) || amount14=== 0) {
+      amount14 = "";
+    }
+    pdf.text(`${amount14}`, 170, 169);
     //15
     pdf.rect(12, 157, 14, 7);
     pdf.rect(26, 157, 82, 7);
@@ -303,7 +375,12 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no15Item}`, 30, 176);
     pdf.text(`${formData.no15Rate}`, 116, 176);
     pdf.text(`${formData.qty15}`, 143, 176);
-    pdf.text(`900`, 170, 176);
+
+    let amount15 = formData.no15Rate * formData.qty15
+    if (isNaN(amount15) || amount15=== 0) {
+      amount15 = "";
+    }
+    pdf.text(`${amount15}`, 170, 176);
     //16
     pdf.rect(12, 164, 14, 7);
     pdf.rect(26, 164, 82, 7);
@@ -314,7 +391,12 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no16Item}`, 30, 183);
     pdf.text(`${formData.no16Rate}`, 116, 183);
     pdf.text(`${formData.qty16}`, 143, 183);
-    pdf.text(`900`, 170, 183);
+
+    let amount16 = formData.no16Rate * formData.qty16
+    if (isNaN(amount16) || amount16=== 0) {
+      amount16 = "";
+    }
+    pdf.text(`${amount16}`, 170, 183);
     //17
     pdf.rect(12, 171, 14, 7);
     pdf.rect(26, 171, 82, 7);
@@ -325,7 +407,12 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no17Item}`, 30, 190);
     pdf.text(`${formData.no17Rate}`, 116, 190);
     pdf.text(`${formData.qty17}`, 143, 190);
-    pdf.text(`900`, 170, 190);
+
+    let amount17 = formData.no17Rate * formData.qty17
+    if (isNaN(amount17) || amount17=== 0) {
+      amount17 = "";
+    }
+    pdf.text(`${amount17}`, 170, 190);
     //18
     pdf.rect(12, 178, 14, 7);
     pdf.rect(26, 178, 82, 7);
@@ -336,7 +423,12 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no18Item}`, 30, 197);
     pdf.text(`${formData.no18Rate}`, 116, 197);
     pdf.text(`${formData.qty18}`, 143, 197);
-    pdf.text(`900`, 170, 197);
+
+    let amount18 = formData.no18Rate * formData.qty18
+    if (isNaN(amount18) || amount18=== 0) {
+      amount18 = "";
+    }
+    pdf.text(`${amount18}`, 170, 197);
     //19
     pdf.rect(12, 185, 14, 7);
     pdf.rect(26, 185, 82, 7);
@@ -347,7 +439,12 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no19Item}`, 30, 204);
     pdf.text(`${formData.no19Rate}`, 116, 204);
     pdf.text(`${formData.qty19}`, 143, 204);
-    pdf.text(`900`, 170, 204);
+
+    let amount19 = formData.no19Rate * formData.qty19
+    if (isNaN(amount19) || amount19=== 0) {
+      amount19 = "";
+    }
+    pdf.text(`${amount19}`, 170, 204);
     //20
     pdf.rect(12, 192, 14, 7);
     pdf.rect(26, 192, 82, 7);
@@ -358,7 +455,12 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no20Item}`, 30, 211);
     pdf.text(`${formData.no20Rate}`, 116, 211);
     pdf.text(`${formData.qty20}`, 143, 211);
-    pdf.text(`900`, 170, 211);
+
+    let amount20 = formData.no20Rate * formData.qty20
+    if (isNaN(amount20) || amount20=== 0) {
+      amount20 = "";
+    }
+    pdf.text(`${amount20}`, 170, 211);
 
     pdf.rect(12, 199, 14, 7);
     pdf.rect(26, 199, 82, 7);
@@ -378,6 +480,8 @@ const HMSInvoice = () => {
     pdf.setFontSize(18);
     pdf.setFont(undefined, "bold");
     pdf.text(`Total`, 135, 220);
+    let totalAmount = amount1 + amount2 + amount3 + amount4 + amount5 + amount6 + amount7 + amount8 + amount9 + amount10 + amount11 + amount12 + amount13 + amount14 + amount15 + amount16 + amount17 + amount18 + amount19 + amount20
+    pdf.text(`${totalAmount}`, 165, 220);
 
     pdf.setFontSize(16);
     pdf.setTextColor(0, 63, 171);
@@ -406,10 +510,11 @@ const HMSInvoice = () => {
       <form onSubmit={handleSubmit}>
         <div className="display-inline">
           <div className="form-group">
-            <label htmlFor="name">Name:</label>
+   
             <input
               type="text"
               className="input margin"
+              placeholder="Name"
               id="name"
               name="name"
               value={formData.name}
@@ -418,27 +523,32 @@ const HMSInvoice = () => {
               title="Please enter name"
             />
           </div>
+
           <div className="form-group">
-            <label htmlFor="address">Address:</label>
-            <input
-              className="input"
-              type="text"
-              id="address"
-              name="address"
-              value={formData.address}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-        <div className="display-inline">
-          <div className="form-group">
-            <label htmlFor="mobile">Mobile:</label>
             <input
               className="input margin"
               type="text"
               id="mobile"
+              placeholder="Mobile"
+
               name="mobile"
               value={formData.mobile}
+              onChange={handleInputChange}
+            />
+          </div>
+         
+        </div>
+        <div className="display-inline">
+          
+
+          <div className="form-group">
+            <input
+              className="inputAddress "
+              type="text"
+              id="address"
+              placeholder="Address"
+              name="address"
+              value={formData.address}
               onChange={handleInputChange}
             />
           </div>
@@ -451,6 +561,7 @@ const HMSInvoice = () => {
               className="inputItem margin"
               type="text"
               id="no1Item"
+              placeholder="Item 1"
               name="no1Item"
               value={formData.no1Item}
               onChange={handleInputChange}
@@ -462,6 +573,7 @@ const HMSInvoice = () => {
               className="inputQty"
               type="text"
               id="qty1"
+              placeholder="Qty 1"
               name="qty1"
               value={formData.qty1}
               onChange={handleInputChange}
@@ -473,6 +585,7 @@ const HMSInvoice = () => {
               className="inputRate"
               type="text"
               id="no1Rate"
+              placeholder="Rate 1"
               name="no1Rate"
               value={formData.no1Rate}
               onChange={handleInputChange}
@@ -587,6 +700,7 @@ const HMSInvoice = () => {
               type="text"
               id="no5Item"
               name="no5Item"
+              placeholder="Item 5"
               value={formData.no5Item}
               onChange={handleInputChange}
             />
@@ -596,6 +710,7 @@ const HMSInvoice = () => {
               className="inputQty"
               type="text"
               id="qty5"
+              placeholder="Qty 5"
               name="qty5"
               value={formData.qty5}
               onChange={handleInputChange}
@@ -606,19 +721,23 @@ const HMSInvoice = () => {
               className="inputRate"
               type="text"
               id="no5Rate"
+              placeholder="Rate 5"
               name="no5Rate"
               value={formData.no5Rate}
               onChange={handleInputChange}
             />
           </div>
         </div>
-        {/* 6 */}
+        {formData.no5Rate != "" ?
+       
+        <div>
         <div className="display-inline ">
           <div className="form-group">
             <input
               className="inputItem margin"
               type="text"
               id="no6Item"
+              placeholder="Item 6"
               name="no6Item"
               value={formData.no6Item}
               onChange={handleInputChange}
@@ -629,6 +748,7 @@ const HMSInvoice = () => {
               className="inputQty"
               type="text"
               id="qty6"
+              placeholder="Qty 6"
               name="qty6"
               value={formData.qty6}
               onChange={handleInputChange}
@@ -639,13 +759,14 @@ const HMSInvoice = () => {
               className="inputRate"
               type="text"
               id="no6Rate"
+              placeholder="Rate 6"
               name="no6Rate"
               value={formData.no6Rate}
               onChange={handleInputChange}
             />
           </div>
         </div>
-        {/* 7 */}
+        
         <div className="display-inline ">
           <div className="form-group">
             <input
@@ -678,7 +799,7 @@ const HMSInvoice = () => {
             />
           </div>
         </div>
-        {/* 8 */}
+    
         <div className="display-inline ">
           <div className="form-group">
             <input
@@ -711,7 +832,7 @@ const HMSInvoice = () => {
             />
           </div>
         </div>
-        {/* 9 */}
+  
         <div className="display-inline ">
           <div className="form-group">
             <input
@@ -744,7 +865,7 @@ const HMSInvoice = () => {
             />
           </div>
         </div>
-        {/* 10 */}
+    
         <div className="display-inline ">
           <div className="form-group">
             <input
@@ -777,6 +898,12 @@ const HMSInvoice = () => {
             />
           </div>
         </div>
+        </div>
+        : ""
+        }
+         {formData.no10Rate != "" ?
+       
+       <div>
         {/* 11 */}
         <div className="display-inline ">
           <div className="form-group">
@@ -942,6 +1069,12 @@ const HMSInvoice = () => {
             />
           </div>
         </div>
+        </div>
+          : ""
+        }
+         {formData.no15Rate != "" ?
+       
+       <div>
         {/* 16 */}
         <div className="display-inline ">
           <div className="form-group">
@@ -1107,8 +1240,11 @@ const HMSInvoice = () => {
             />
           </div>
         </div>
+        </div>
+     
 
-        
+        : ""
+      }
 
         <button type="submit" className="submit-button margin">
           Download
