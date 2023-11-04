@@ -11,8 +11,8 @@ function App() {
       
 <Router>
   <Routes>
-  <Route exact path="/HMS" element={<Home />} />
-  <Route exact path="/HMSInvoice" element={<HMSInvoice />} />
+  <Route exact path="/HMS" element={<HMSInvoice />} />
+  <Route exact path="/" element={<HMSInvoice />} />
   </Routes>
 </Router>
     </div>

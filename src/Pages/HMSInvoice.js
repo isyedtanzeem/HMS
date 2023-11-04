@@ -1,26 +1,80 @@
 import React, { useState } from "react";
 import "./Common.css";
+import { ToWords } from 'to-words';
 import jsPDF from "jspdf";
-
-import Logo from "./Images/HtmLogo.png"; // Import your logo image
-import SupportLogo from "./support-logo.png";
-
-import resix from "./Images/resix.png";
+import numberToWords from "number-to-words";
+import Logo from "./Images/hmslogo.png"; // Import your logo image
+import waterMark from "./Images/hmswatermark.png"; // Import your logo image
+import upi from "./Images/upi.png"; // Import your logo image
+import callIcon from "./Images/callicon.png"; // Import your logo image
+import { InvoiceNumber } from 'invoice-number'
 import Signature from "./Images/signature.png";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 const HMSInvoice = () => {
   const [formData, setFormData] = useState({
-    no1Rate: "",no2Rate: "",no3Rate: "",no4Rate: "",no5Rate: "",no6Rate: "",no7Rate: "",no8Rate: "",
-    no9Rate: "",no10Rate: "",no11Rate: "",no12Rate: "",no13Rate: "",no14Rate: "",no15Rate: "",no16Rate: "",
-    no17Rate: "",no18Rate: "",no19Rate: "",no20Rate: "",
+    no1Rate: "",
+    no2Rate: "",
+    no3Rate: "",
+    no4Rate: "",
+    no5Rate: "",
+    no6Rate: "",
+    no7Rate: "",
+    no8Rate: "",
+    no9Rate: "",
+    no10Rate: "",
+    no11Rate: "",
+    no12Rate: "",
+    no13Rate: "",
+    no14Rate: "",
+    no15Rate: "",
+    no16Rate: "",
+    no17Rate: "",
+    no18Rate: "",
+    no19Rate: "",
+    no20Rate: "",
 
-    no1Item: "",no2Item: "",no3Item: "",no4Item: "",no5Item: "",no6Item: "",no7Item: "",no8Item: "",
-    no9Item: "",no10Item: "",no11Item: "",no12Item: "",no13Item: "",no14Item: "",no15Item: "",no16Item: "",
-    no17Item: "",no18Item: "",no19Item: "",no20Item: "",
+    no1Item: "",
+    no2Item: "",
+    no3Item: "",
+    no4Item: "",
+    no5Item: "",
+    no6Item: "",
+    no7Item: "",
+    no8Item: "",
+    no9Item: "",
+    no10Item: "",
+    no11Item: "",
+    no12Item: "",
+    no13Item: "",
+    no14Item: "",
+    no15Item: "",
+    no16Item: "",
+    no17Item: "",
+    no18Item: "",
+    no19Item: "",
+    no20Item: "",
 
-    qty1: "", qty2: "", qty3: "", qty4: "", qty5: "", qty6: "", qty7: "", qty8: "", qty9: "", qty10: "",
-    qty11: "", qty12: "", qty13: "", qty14: "", qty15: "", qty16: "", qty17: "", qty18: "", qty19: "", qty20: "",
+    qty1: "",
+    qty2: "",
+    qty3: "",
+    qty4: "",
+    qty5: "",
+    qty6: "",
+    qty7: "",
+    qty8: "",
+    qty9: "",
+    qty10: "",
+    qty11: "",
+    qty12: "",
+    qty13: "",
+    qty14: "",
+    qty15: "",
+    qty16: "",
+    qty17: "",
+    qty18: "",
+    qty19: "",
+    qty20: "",
     amount1: "",
     amount2: "",
     name: "",
@@ -40,23 +94,97 @@ const HMSInvoice = () => {
 
   const handleClear = () => {
     setFormData({
-      no1Rate: "",no2Rate: "",no3Rate: "",no4Rate: "",no5Rate: "",no6Rate: "",no7Rate: "",no8Rate: "",
-    no9Rate: "",no10Rate: "",no11Rate: "",no12Rate: "",no13Rate: "",no14Rate: "",no15Rate: "",no16Rate: "",
-    no17Rate: "",no18Rate: "",no19Rate: "",no20Rate: "",
+      no1Rate: "",
+      no2Rate: "",
+      no3Rate: "",
+      no4Rate: "",
+      no5Rate: "",
+      no6Rate: "",
+      no7Rate: "",
+      no8Rate: "",
+      no9Rate: "",
+      no10Rate: "",
+      no11Rate: "",
+      no12Rate: "",
+      no13Rate: "",
+      no14Rate: "",
+      no15Rate: "",
+      no16Rate: "",
+      no17Rate: "",
+      no18Rate: "",
+      no19Rate: "",
+      no20Rate: "",
 
-    no1Item: "",no2Item: "",no3Item: "",no4Item: "",no5Item: "",no6Item: "",no7Item: "",no8Item: "",
-    no9Item: "",no10Item: "",no11Item: "",no12Item: "",no13Item: "",no14Item: "",no15Item: "",no16Item: "",
-    no17Item: "",no18Item: "",no19Item: "",no20Item: "",
+      no1Item: "",
+      no2Item: "",
+      no3Item: "",
+      no4Item: "",
+      no5Item: "",
+      no6Item: "",
+      no7Item: "",
+      no8Item: "",
+      no9Item: "",
+      no10Item: "",
+      no11Item: "",
+      no12Item: "",
+      no13Item: "",
+      no14Item: "",
+      no15Item: "",
+      no16Item: "",
+      no17Item: "",
+      no18Item: "",
+      no19Item: "",
+      no20Item: "",
 
-    qty1: "", qty2: "", qty3: "", qty4: "", qty5: "", qty6: "", qty7: "", qty8: "", qty9: "", qty10: "",
-    qty11: "", qty12: "", qty13: "", qty14: "", qty15: "", qty16: "", qty17: "", qty18: "", qty19: "", qty20: "",
+      qty1: "",
+      qty2: "",
+      qty3: "",
+      qty4: "",
+      qty5: "",
+      qty6: "",
+      qty7: "",
+      qty8: "",
+      qty9: "",
+      qty10: "",
+      qty11: "",
+      qty12: "",
+      qty13: "",
+      qty14: "",
+      qty15: "",
+      qty16: "",
+      qty17: "",
+      qty18: "",
+      qty19: "",
+      qty20: "",
       name: "",
       mobile: "",
       address: "",
-  
     });
   };
 
+  const toWords = new ToWords({
+    localeCode: 'en-IN',
+    converterOptions: {
+      currency: true,
+      ignoreDecimal: false,
+      ignoreZeroCurrency: false,
+      doNotAddOnly: false,
+      currencyOptions: { // can be used to override defaults for the selected locale
+        name: 'Rupee',
+        plural: 'Rupees',
+        symbol: '₹',
+        fractionalUnit: {
+          name: 'Paisa',
+          plural: 'Paise',
+          symbol: '',
+        },
+      }
+    }
+  });
+
+
+
+  
   const day = dateForCount.getDate();
 
   let count = day + 166;
@@ -73,34 +201,45 @@ const HMSInvoice = () => {
   const generatePDF = (count) => {
     const pdf = new jsPDF();
     pdf.setFont("helvetica", "normal");
+
+    pdf.setFontSize(55);
+
+    pdf.addImage(Logo, "PNG", 20, 8, 16, 16);
+    pdf.addImage(waterMark, "PNG", 36, 70, 140, 140);
+    pdf.setFont(undefined, "bold");
+    pdf.setFontSize(40);
+    pdf.setTextColor(46,57,150);
+    pdf.text("H.M Sanitation", 44, 20);
+    pdf.setFont(undefined, "none");
+    pdf.setTextColor(0, 0, 0);
     pdf.setFontSize(14);
 
-    // pdf.addImage(Logo, "PNG", 15, 5, 80, 20);
-    pdf.setFontSize(8);
-    pdf.text(12, 30, "No. 170,6th cross,Balaji Nagar, Bangalore - 560029");
+    pdf.setFontSize(9);
+    pdf.text(13, 30, "No. 170,6th cross,Balaji Nagar, Bangalore - 560029");
     pdf.text(
-      12,
+      13,
       34,
       "E-Mail :hmsanitation@gmail.com             Web : www.hmsanitation.in"
     );
-    pdf.setFontSize(10);
+    pdf.setFontSize(15);
     pdf.setFont(undefined, "bold");
 
-    pdf.text(130, 18, "Invoice");
+    pdf.text(160, 18, "Invoice");
 
-    pdf.setFillColor(0, 63, 171);
+
 
     // Add a filled rectangular box to the PDF
-    pdf.rect(130, 24, 16, 7, "F"); // 'F' stands for 'Fill'
+
 
     // Set text color to white
-    pdf.setTextColor(255, 255, 255); // White color
-    pdf.text(`C`, 133, 30);
+  
     pdf.setTextColor(0, 0, 0);
-    pdf.setFontSize(10);
+    pdf.setFontSize(16);
     pdf.setFont(undefined, "none");
-    pdf.text(146, 30, " 72042 08209");
+    pdf.addImage(callIcon, "PNG", 147, 24, 8, 8);
 
+    pdf.text(156, 30, " +91 7204021703");
+    pdf.setFontSize(10);
     //input
     pdf.rect(12, 41, 95, 7);
     pdf.text(`NAME: ${formData.name}`, 13, 45, { align: "left" });
@@ -108,18 +247,25 @@ const HMSInvoice = () => {
     pdf.text(`NUMBER: ${formData.mobile}`, 13, 52.5, { align: "left" });
     pdf.rect(12, 55, 185, 7);
     pdf.text(`ADDRESS: ${formData.address}`, 13, 59.5, { align: "left" });
-  
+
     const currentDate = new Date().toLocaleDateString();
+    var d = new Date(); 
+    var t = new Date().getTime();
+    var randomnum = Math.floor(Math.random() * (100 -  50000)) + 100;
+    randomnum = d.getFullYear() + (d.getMonth()+1) + (d.getDate()) + randomnum; 
+    randomnum = randomnum + t;
+    randomnum = randomnum - 1699000090000 ;
+    console.log(randomnum);
     pdf.rect(107, 41, 90, 7);
     pdf.text(`DATE: ${currentDate}`, 108, 45.4);
-    pdf.text(`BILL NO: ${count}`, 108, 52.5, { align: "left" });
+    pdf.text(`BILL NO: HMS${randomnum}`, 108, 52.5, { align: "left" });
 
     pdf.rect(107, 48, 90, 7);
 
     //end of first layer
 
     pdf.setFontSize(12);
-    pdf.setFillColor(0, 63, 171);
+    pdf.setFillColor(46,57,150);
     pdf.rect(12, 66, 185, 7, "F");
 
     pdf.setFont(undefined, "bold");
@@ -144,8 +290,8 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no1Item}`, 30, 78);
     pdf.text(`${formData.no1Rate}`, 116, 78);
     pdf.text(`${formData.qty1}`, 143, 78);
-    let amount1 = formData.no1Rate * formData.qty1
-    if (isNaN(amount1) || amount1=== 0) {
+    let amount1 = formData.no1Rate * formData.qty1;
+    if (isNaN(amount1) || amount1 === 0) {
       amount1 = "";
     }
     pdf.text(`${amount1}`, 170, 78);
@@ -165,8 +311,8 @@ const HMSInvoice = () => {
     pdf.text(`02`, 17, 85);
     pdf.text(`${formData.no2Item}`, 30, 85);
     pdf.text(`${formData.no2Rate}`, 116, 85);
-    pdf.text(`${formData.qty2}`, 143, 85); 
-   
+    pdf.text(`${formData.qty2}`, 143, 85);
+
     let amount2 = formData.no2Rate * formData.qty2;
     if (isNaN(amount2) || amount2 === 0) {
       amount2 = "";
@@ -182,8 +328,8 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no3Item}`, 30, 92);
     pdf.text(`${formData.no3Rate}`, 116, 92);
     pdf.text(`${formData.qty3}`, 143, 92);
-    let amount3 = formData.no3Rate * formData.qty3
-    if (isNaN(amount3) || amount3=== 0) {
+    let amount3 = formData.no3Rate * formData.qty3;
+    if (isNaN(amount3) || amount3 === 0) {
       amount3 = "";
     }
     pdf.text(`${amount3}`, 170, 92);
@@ -198,8 +344,8 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no4Item}`, 30, 99);
     pdf.text(`${formData.no4Rate}`, 116, 99);
     pdf.text(`${formData.qty4}`, 143, 99);
-    let amount4 = formData.no4Rate * formData.qty4
-    if (isNaN(amount4) || amount4=== 0) {
+    let amount4 = formData.no4Rate * formData.qty4;
+    if (isNaN(amount4) || amount4 === 0) {
       amount4 = "";
     }
     pdf.text(`${amount4}`, 170, 99);
@@ -214,8 +360,8 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no5Rate}`, 116, 106);
     pdf.text(`${formData.qty5}`, 143, 106);
 
-    let amount5 = formData.no5Rate * formData.qty5
-    if (isNaN(amount5) || amount5=== 0) {
+    let amount5 = formData.no5Rate * formData.qty5;
+    if (isNaN(amount5) || amount5 === 0) {
       amount5 = "";
     }
 
@@ -231,8 +377,8 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no6Rate}`, 116, 113);
     pdf.text(`${formData.qty6}`, 143, 113);
 
-    let amount6 = formData.no6Rate * formData.qty6
-    if (isNaN(amount6) || amount6=== 0) {
+    let amount6 = formData.no6Rate * formData.qty6;
+    if (isNaN(amount6) || amount6 === 0) {
       amount6 = "";
     }
 
@@ -248,8 +394,8 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no7Rate}`, 116, 120);
     pdf.text(`${formData.qty7}`, 143, 120);
 
-    let amount7 = formData.no7Rate * formData.qty7
-    if (isNaN(amount7) || amount7=== 0) {
+    let amount7 = formData.no7Rate * formData.qty7;
+    if (isNaN(amount7) || amount7 === 0) {
       amount7 = "";
     }
     pdf.text(`${amount7}`, 170, 120);
@@ -264,8 +410,8 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no8Rate}`, 116, 127);
     pdf.text(`${formData.qty8}`, 143, 127);
 
-    let amount8 = formData.no8Rate * formData.qty8
-    if (isNaN(amount8) || amount8=== 0) {
+    let amount8 = formData.no8Rate * formData.qty8;
+    if (isNaN(amount8) || amount8 === 0) {
       amount8 = "";
     }
     pdf.text(`${amount8}`, 170, 127);
@@ -280,8 +426,8 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no9Rate}`, 116, 134);
     pdf.text(`${formData.qty9}`, 143, 134);
 
-    let amount9 = formData.no9Rate * formData.qty9
-    if (isNaN(amount9) || amount9=== 0) {
+    let amount9 = formData.no9Rate * formData.qty9;
+    if (isNaN(amount9) || amount9 === 0) {
       amount9 = "";
     }
     pdf.text(`${amount9}`, 170, 134);
@@ -296,8 +442,8 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no10Rate}`, 116, 141);
     pdf.text(`${formData.qty10}`, 143, 141);
 
-    let amount10 = formData.no10Rate * formData.qty10
-    if (isNaN(amount10) || amount10=== 0) {
+    let amount10 = formData.no10Rate * formData.qty10;
+    if (isNaN(amount10) || amount10 === 0) {
       amount10 = "";
     }
     pdf.text(`${amount10}`, 170, 141);
@@ -312,8 +458,8 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no11Rate}`, 116, 148);
     pdf.text(`${formData.qty11}`, 143, 148);
 
-    let amount11 = formData.no11Rate * formData.qty11
-    if (isNaN(amount11) || amount11=== 0) {
+    let amount11 = formData.no11Rate * formData.qty11;
+    if (isNaN(amount11) || amount11 === 0) {
       amount11 = "";
     }
     pdf.text(`${amount11}`, 170, 148);
@@ -328,8 +474,8 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no12Rate}`, 116, 155);
     pdf.text(`${formData.qty12}`, 143, 155);
 
-    let amount12 = formData.no12Rate * formData.qty12
-    if (isNaN(amount12) || amount12=== 0) {
+    let amount12 = formData.no12Rate * formData.qty12;
+    if (isNaN(amount12) || amount12 === 0) {
       amount12 = "";
     }
     pdf.text(`${amount12}`, 170, 155);
@@ -344,8 +490,8 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no13Rate}`, 116, 162);
     pdf.text(`${formData.qty13}`, 143, 162);
 
-    let amount13 = formData.no13Rate * formData.qty13
-    if (isNaN(amount13) || amount13=== 0) {
+    let amount13 = formData.no13Rate * formData.qty13;
+    if (isNaN(amount13) || amount13 === 0) {
       amount13 = "";
     }
     pdf.text(`${amount13}`, 170, 162);
@@ -360,8 +506,8 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no14Rate}`, 116, 169);
     pdf.text(`${formData.qty14}`, 143, 169);
 
-    let amount14 = formData.no14rRate * formData.qty14
-    if (isNaN(amount14) || amount14=== 0) {
+    let amount14 = formData.no14rRate * formData.qty14;
+    if (isNaN(amount14) || amount14 === 0) {
       amount14 = "";
     }
     pdf.text(`${amount14}`, 170, 169);
@@ -371,13 +517,13 @@ const HMSInvoice = () => {
     pdf.rect(108, 157, 26, 7);
     pdf.rect(134, 157, 20, 7);
     pdf.rect(154, 157, 43, 7);
-    pdf.text('15', 17, 176);
+    pdf.text("15", 17, 176);
     pdf.text(`${formData.no15Item}`, 30, 176);
     pdf.text(`${formData.no15Rate}`, 116, 176);
     pdf.text(`${formData.qty15}`, 143, 176);
 
-    let amount15 = formData.no15Rate * formData.qty15
-    if (isNaN(amount15) || amount15=== 0) {
+    let amount15 = formData.no15Rate * formData.qty15;
+    if (isNaN(amount15) || amount15 === 0) {
       amount15 = "";
     }
     pdf.text(`${amount15}`, 170, 176);
@@ -392,8 +538,8 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no16Rate}`, 116, 183);
     pdf.text(`${formData.qty16}`, 143, 183);
 
-    let amount16 = formData.no16Rate * formData.qty16
-    if (isNaN(amount16) || amount16=== 0) {
+    let amount16 = formData.no16Rate * formData.qty16;
+    if (isNaN(amount16) || amount16 === 0) {
       amount16 = "";
     }
     pdf.text(`${amount16}`, 170, 183);
@@ -408,8 +554,8 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no17Rate}`, 116, 190);
     pdf.text(`${formData.qty17}`, 143, 190);
 
-    let amount17 = formData.no17Rate * formData.qty17
-    if (isNaN(amount17) || amount17=== 0) {
+    let amount17 = formData.no17Rate * formData.qty17;
+    if (isNaN(amount17) || amount17 === 0) {
       amount17 = "";
     }
     pdf.text(`${amount17}`, 170, 190);
@@ -424,8 +570,8 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no18Rate}`, 116, 197);
     pdf.text(`${formData.qty18}`, 143, 197);
 
-    let amount18 = formData.no18Rate * formData.qty18
-    if (isNaN(amount18) || amount18=== 0) {
+    let amount18 = formData.no18Rate * formData.qty18;
+    if (isNaN(amount18) || amount18 === 0) {
       amount18 = "";
     }
     pdf.text(`${amount18}`, 170, 197);
@@ -440,8 +586,8 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no19Rate}`, 116, 204);
     pdf.text(`${formData.qty19}`, 143, 204);
 
-    let amount19 = formData.no19Rate * formData.qty19
-    if (isNaN(amount19) || amount19=== 0) {
+    let amount19 = formData.no19Rate * formData.qty19;
+    if (isNaN(amount19) || amount19 === 0) {
       amount19 = "";
     }
     pdf.text(`${amount19}`, 170, 204);
@@ -456,8 +602,8 @@ const HMSInvoice = () => {
     pdf.text(`${formData.no20Rate}`, 116, 211);
     pdf.text(`${formData.qty20}`, 143, 211);
 
-    let amount20 = formData.no20Rate * formData.qty20
-    if (isNaN(amount20) || amount20=== 0) {
+    let amount20 = formData.no20Rate * formData.qty20;
+    if (isNaN(amount20) || amount20 === 0) {
       amount20 = "";
     }
     pdf.text(`${amount20}`, 170, 211);
@@ -480,18 +626,59 @@ const HMSInvoice = () => {
     pdf.setFontSize(18);
     pdf.setFont(undefined, "bold");
     pdf.text(`Total`, 135, 220);
-    let totalAmount = amount1 + amount2 + amount3 + amount4 + amount5 + amount6 + amount7 + amount8 + amount9 + amount10 + amount11 + amount12 + amount13 + amount14 + amount15 + amount16 + amount17 + amount18 + amount19 + amount20
+    let totalAmount =
+      amount1 +
+      amount2 +
+      amount3 +
+      amount4 +
+      amount5 +
+      amount6 +
+      amount7 +
+      amount8 +
+      amount9 +
+      amount10 +
+      amount11 +
+      amount12 +
+      amount13 +
+      amount14 +
+      amount15 +
+      amount16 +
+      amount17 +
+      amount18 +
+      amount19 +
+      amount20;
     pdf.text(`${totalAmount}`, 165, 220);
 
+    pdf.setFontSize(12);
+
+    pdf.setFont(undefined, "none");
+
+    const toWords = new ToWords();
+    let inWords = toWords.convert(totalAmount, { currency: true });
+    pdf.setFont(undefined, "bold");
+    pdf.text(`IN WORDS:`, 14, 230);
+    pdf.setFont(undefined, "none");
+    pdf.text(`${inWords}`, 14, 235.5);
+    pdf.line(12, 237, 197,237);
+    pdf.setFont(undefined, "bold");
+
     pdf.setFontSize(16);
-    pdf.setTextColor(0, 63, 171);
+    pdf.setTextColor(46,57,150);
 
-    pdf.text(`For HM Sanitation`, 136, 230);
+    pdf.text(`For HM Sanitation`, 136, 244);
+        pdf.addImage(Signature, "PNG", 140, 246, 50, 20);
 
-    pdf.text(`Thank You`, 70, 340);
+        pdf.addImage(upi, "PNG", 14, 255, 30, 14);
 
+    pdf.setFontSize(16);
+   
+    pdf.setFont(undefined, "none");
+  
+    pdf.text(`Payment Modes:`, 13, 244);
     pdf.setFontSize(14);
-    pdf.setTextColor(0, 0, 0);
+    pdf.text(`GPay/PhonePe/Paytm: `, 13, 250);
+    pdf.setFont(undefined, "bold");
+    pdf.text(`7204021703`, 59, 250);
 
     // Remove spaces and special characters from name and mobile
     const sanitizedName = formData.name.replace(/[^a-zA-Z0-9]/g, "");
@@ -510,7 +697,6 @@ const HMSInvoice = () => {
       <form onSubmit={handleSubmit}>
         <div className="display-inline">
           <div className="form-group">
-   
             <input
               type="text"
               className="input margin"
@@ -530,17 +716,13 @@ const HMSInvoice = () => {
               type="text"
               id="mobile"
               placeholder="Mobile"
-
               name="mobile"
               value={formData.mobile}
               onChange={handleInputChange}
             />
           </div>
-         
         </div>
         <div className="display-inline">
-          
-
           <div className="form-group">
             <input
               className="inputAddress "
@@ -562,6 +744,8 @@ const HMSInvoice = () => {
               type="text"
               id="no1Item"
               placeholder="Item 1"
+              required
+              title="Please enter Item"
               name="no1Item"
               value={formData.no1Item}
               onChange={handleInputChange}
@@ -574,6 +758,8 @@ const HMSInvoice = () => {
               type="text"
               id="qty1"
               placeholder="Qty 1"
+              required
+              title="Please enter Qty"
               name="qty1"
               value={formData.qty1}
               onChange={handleInputChange}
@@ -587,6 +773,8 @@ const HMSInvoice = () => {
               id="no1Rate"
               placeholder="Rate 1"
               name="no1Rate"
+              required
+              title="Please enter Rate"
               value={formData.no1Rate}
               onChange={handleInputChange}
             />
@@ -600,6 +788,7 @@ const HMSInvoice = () => {
               className="inputItem margin"
               type="text"
               id="no2Item"
+              placeholder="Item 2"
               name="no2Item"
               value={formData.no2Item}
               onChange={handleInputChange}
@@ -610,6 +799,7 @@ const HMSInvoice = () => {
               className="inputQty"
               type="text"
               id="qty2"
+              placeholder="Qty 2 "
               name="qty2"
               value={formData.qty2}
               onChange={handleInputChange}
@@ -620,6 +810,7 @@ const HMSInvoice = () => {
               className="inputRate"
               type="text"
               id="no2Rate"
+              placeholder="Rate 2"
               name="no2Rate"
               value={formData.no2Rate}
               onChange={handleInputChange}
@@ -634,6 +825,7 @@ const HMSInvoice = () => {
               type="text"
               id="no3Item"
               name="no3Item"
+              placeholder="Item 3"
               value={formData.no3Item}
               onChange={handleInputChange}
             />
@@ -643,6 +835,7 @@ const HMSInvoice = () => {
               className="inputQty"
               type="text"
               id="qty3"
+              placeholder="Qty 3"
               name="qty3"
               value={formData.qty3}
               onChange={handleInputChange}
@@ -654,6 +847,7 @@ const HMSInvoice = () => {
               type="text"
               id="no3Rate"
               name="no3Rate"
+              placeholder="Rate 3"
               value={formData.no3Rate}
               onChange={handleInputChange}
             />
@@ -666,6 +860,7 @@ const HMSInvoice = () => {
               className="inputItem margin"
               type="text"
               id="no4Item"
+              placeholder="Item 4"
               name="no4Item"
               value={formData.no4Item}
               onChange={handleInputChange}
@@ -676,6 +871,7 @@ const HMSInvoice = () => {
               className="inputQty"
               type="text"
               id="qty4"
+              placeholder="Qty 4 "
               name="qty4"
               value={formData.qty4}
               onChange={handleInputChange}
@@ -687,6 +883,7 @@ const HMSInvoice = () => {
               type="text"
               id="no4Rate"
               name="no4Rate"
+              placeholder="Rate 4 "
               value={formData.no4Rate}
               onChange={handleInputChange}
             />
@@ -728,523 +925,563 @@ const HMSInvoice = () => {
             />
           </div>
         </div>
-        {formData.no5Rate != "" ?
-       
-        <div>
-        <div className="display-inline ">
-          <div className="form-group">
-            <input
-              className="inputItem margin"
-              type="text"
-              id="no6Item"
-              placeholder="Item 6"
-              name="no6Item"
-              value={formData.no6Item}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="inputQty"
-              type="text"
-              id="qty6"
-              placeholder="Qty 6"
-              name="qty6"
-              value={formData.qty6}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="inputRate"
-              type="text"
-              id="no6Rate"
-              placeholder="Rate 6"
-              name="no6Rate"
-              value={formData.no6Rate}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-        
-        <div className="display-inline ">
-          <div className="form-group">
-            <input
-              className="inputItem margin"
-              type="text"
-              id="no7Item"
-              name="no7Item"
-              value={formData.no7Item}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="inputQty"
-              type="text"
-              id="qty7"
-              name="qty7"
-              value={formData.qty7}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="inputRate"
-              type="text"
-              id="no7Rate"
-              name="no7Rate"
-              value={formData.no7Rate}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-    
-        <div className="display-inline ">
-          <div className="form-group">
-            <input
-              className="inputItem margin"
-              type="text"
-              id="no8Item"
-              name="no8Item"
-              value={formData.no8Item}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="inputQty"
-              type="text"
-              id="qty8"
-              name="qty8"
-              value={formData.qty8}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="inputRate"
-              type="text"
-              id="no8Rate"
-              name="no8Rate"
-              value={formData.no8Rate}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-  
-        <div className="display-inline ">
-          <div className="form-group">
-            <input
-              className="inputItem margin"
-              type="text"
-              id="no9Item"
-              name="no9Item"
-              value={formData.no9Item}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="inputQty"
-              type="text"
-              id="qty9"
-              name="qty9"
-              value={formData.qty9}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="inputRate"
-              type="text"
-              id="no9Rate"
-              name="no9Rate"
-              value={formData.no9Rate}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-    
-        <div className="display-inline ">
-          <div className="form-group">
-            <input
-              className="inputItem margin"
-              type="text"
-              id="no10Item"
-              name="no10Item"
-              value={formData.no10Item}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="inputQty"
-              type="text"
-              id="qty10"
-              name="qty10"
-              value={formData.qty10}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="inputRate"
-              type="text"
-              id="no10Rate"
-              name="no10Rate"
-              value={formData.no10Rate}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-        </div>
-        : ""
-        }
-         {formData.no10Rate != "" ?
-       
-       <div>
-        {/* 11 */}
-        <div className="display-inline ">
-          <div className="form-group">
-            <input
-              className="inputItem margin"
-              type="text"
-              id="no11Item"
-              name="no11Item"
-              value={formData.no11Item}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="inputQty"
-              type="text"
-              id="qty11"
-              name="qty11"
-              value={formData.qty11}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="inputRate"
-              type="text"
-              id="no11Rate"
-              name="no11Rate"
-              value={formData.no11Rate}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-        {/* 12 */}
-        <div className="display-inline ">
-          <div className="form-group">
-            <input
-              className="inputItem margin"
-              type="text"
-              id="no12Item"
-              name="no12Item"
-              value={formData.no12Item}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="inputQty"
-              type="text"
-              id="qty12"
-              name="qty12"
-              value={formData.qty12}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="inputRate"
-              type="text"
-              id="no12Rate"
-              name="no12Rate"
-              value={formData.no12Rate}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-        {/* 13 */}
-        <div className="display-inline ">
-          <div className="form-group">
-            <input
-              className="inputItem margin"
-              type="text"
-              id="no13Item"
-              name="no13Item"
-              value={formData.no13Item}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="inputQty"
-              type="text"
-              id="qty13"
-              name="qty13"
-              value={formData.qty13}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="inputRate"
-              type="text"
-              id="no13Rate"
-              name="no13Rate"
-              value={formData.no13Rate}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-        {/* 14 */}
-        <div className="display-inline ">
-          <div className="form-group">
-            <input
-              className="inputItem margin"
-              type="text"
-              id="no14Item"
-              name="no14Item"
-              value={formData.no14Item}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="inputQty"
-              type="text"
-              id="qty14"
-              name="qty14"
-              value={formData.qty14}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="inputRate"
-              type="text"
-              id="no14Rate"
-              name="no14Rate"
-              value={formData.no14Rate}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-        {/* 15 */}
-        <div className="display-inline ">
-          <div className="form-group">
-            <input
-              className="inputItem margin"
-              type="text"
-              id="no15Item"
-              name="no15Item"
-              value={formData.no15Item}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="inputQty"
-              type="text"
-              id="qty15"
-              name="qty15"
-              value={formData.qty15}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="inputRate"
-              type="text"
-              id="no15Rate"
-              name="no15Rate"
-              value={formData.no15Rate}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-        </div>
-          : ""
-        }
-         {formData.no15Rate != "" ?
-       
-       <div>
-        {/* 16 */}
-        <div className="display-inline ">
-          <div className="form-group">
-            <input
-              className="inputItem margin"
-              type="text"
-              id="no16Item"
-              name="no16Item"
-              value={formData.no16Item}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="inputQty"
-              type="text"
-              id="qty16"
-              name="qty16"
-              value={formData.qty16}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="inputRate"
-              type="text"
-              id="no16Rate"
-              name="no16Rate"
-              value={formData.no16Rate}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-        {/* 17 */}
-        <div className="display-inline ">
-          <div className="form-group">
-            <input
-              className="inputItem margin"
-              type="text"
-              id="no17Item"
-              name="no17Item"
-              value={formData.no17Item}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="inputQty"
-              type="text"
-              id="qty17"
-              name="qty17"
-              value={formData.qty17}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="inputRate"
-              type="text"
-              id="no17Rate"
-              name="no17Rate"
-              value={formData.no17Rate}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-        {/* 18 */}
-        <div className="display-inline ">
-          <div className="form-group">
-            <input
-              className="inputItem margin"
-              type="text"
-              id="no18Item"
-              name="no18Item"
-              value={formData.no18Item}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="inputQty"
-              type="text"
-              id="qty18"
-              name="qty18"
-              value={formData.qty18}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="inputRate"
-              type="text"
-              id="no18Rate"
-              name="no18Rate"
-              value={formData.no18Rate}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-        {/* 19 */}
-        <div className="display-inline ">
-          <div className="form-group">
-            <input
-              className="inputItem margin"
-              type="text"
-              id="no19Item"
-              name="no19Item"
-              value={formData.no19Item}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="inputQty"
-              type="text"
-              id="qty19"
-              name="qty19"
-              value={formData.qty19}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="inputRate"
-              type="text"
-              id="no19Rate"
-              name="no19Rate"
-              value={formData.no19Rate}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-        {/* 20 */}
-        <div className="display-inline ">
-          <div className="form-group">
-            <input
-              className="inputItem margin"
-              type="text"
-              id="no20Item"
-              name="no20Item"
-              value={formData.no20Item}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="inputQty"
-              type="text"
-              id="qty20"
-              name="qty20"
-              value={formData.qty20}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="inputRate"
-              type="text"
-              id="no20Rate"
-              name="no20Rate"
-              value={formData.no20Rate}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-        </div>
-     
+        {formData.no5Rate != "" ? (
+          <div>
+            <div className="display-inline ">
+              <div className="form-group">
+                <input
+                  className="inputItem margin"
+                  type="text"
+                  id="no6Item"
+                  placeholder="Item 6"
+                  name="no6Item"
+                  value={formData.no6Item}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  className="inputQty"
+                  type="text"
+                  id="qty6"
+                  placeholder="Qty 6"
+                  name="qty6"
+                  value={formData.qty6}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  className="inputRate"
+                  type="text"
+                  id="no6Rate"
+                  placeholder="Rate 6"
+                  name="no6Rate"
+                  value={formData.no6Rate}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
 
-        : ""
-      }
+            <div className="display-inline ">
+              <div className="form-group">
+                <input
+                  className="inputItem margin"
+                  type="text"
+                  id="no7Item"
+                  placeholder="Item 7"
+                  name="no7Item"
+                  value={formData.no7Item}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  className="inputQty"
+                  type="text"
+                  id="qty7"
+                  name="qty7"
+                  placeholder="Qty 7"
+                  value={formData.qty7}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  className="inputRate"
+                  type="text"
+                  id="no7Rate"
+                  name="no7Rate"
+                  placeholder="Rate 7"
+                  value={formData.no7Rate}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+
+            <div className="display-inline ">
+              <div className="form-group">
+                <input
+                  className="inputItem margin"
+                  type="text"
+                  id="no8Item"
+                  placeholder="Item 8"
+                  name="no8Item"
+                  value={formData.no8Item}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  className="inputQty"
+                  type="text"
+                  id="qty8"
+                  placeholder="Qty 8 "
+                  name="qty8"
+                  value={formData.qty8}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  className="inputRate"
+                  type="text"
+                  id="no8Rate"
+                  placeholder="Rate 8"
+                  name="no8Rate"
+                  value={formData.no8Rate}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+
+            <div className="display-inline ">
+              <div className="form-group">
+                <input
+                  className="inputItem margin"
+                  type="text"
+                  id="no9Item"
+                  placeholder="Item 9"
+                  name="no9Item"
+                  value={formData.no9Item}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  className="inputQty"
+                  type="text"
+                  placeholder="Qty 9 "
+                  id="qty9"
+                  name="qty9"
+                  value={formData.qty9}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  className="inputRate"
+                  type="text"
+                  id="no9Rate"
+                  name="no9Rate"
+                  placeholder="Rate 9"
+                  value={formData.no9Rate}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+
+            <div className="display-inline ">
+              <div className="form-group">
+                <input
+                  className="inputItem margin"
+                  type="text"
+                  id="no10Item"
+                  name="no10Item"
+                  placeholder="Item 10"
+                  value={formData.no10Item}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  className="inputQty"
+                  type="text"
+                  id="qty10"
+                  placeholder="Qty 10"
+                  name="qty10"
+                  value={formData.qty10}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  className="inputRate"
+                  type="text"
+                  id="no10Rate"
+                  placeholder="Rate 10"
+                  name="no10Rate"
+                  value={formData.no10Rate}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
+        {formData.no10Rate != "" ? (
+          <div>
+            {/* 11 */}
+            <div className="display-inline ">
+              <div className="form-group">
+                <input
+                  className="inputItem margin"
+                  type="text"
+                  id="no11Item"
+                  placeholder="Item 11"
+                  name="no11Item"
+                  value={formData.no11Item}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  className="inputQty"
+                  type="text"
+                  id="qty11"
+                  name="qty11"
+                  placeholder="Qty 11 "
+                  value={formData.qty11}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  className="inputRate"
+                  type="text"
+                  id="no11Rate"
+                  placeholder="Rate 11"
+                  name="no11Rate"
+                  value={formData.no11Rate}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+            {/* 12 */}
+            <div className="display-inline ">
+              <div className="form-group">
+                <input
+                  className="inputItem margin"
+                  type="text"
+                  id="no12Item"
+                  placeholder="Item 12"
+                  name="no12Item"
+                  value={formData.no12Item}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  className="inputQty"
+                  type="text"
+                  placeholder="Qty 12"
+                  id="qty12"
+                  name="qty12"
+                  value={formData.qty12}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  className="inputRate"
+                  type="text"
+                  placeholder="Rate 12"
+                  id="no12Rate"
+                  name="no12Rate"
+                  value={formData.no12Rate}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+            {/* 13 */}
+            <div className="display-inline ">
+              <div className="form-group">
+                <input
+                  className="inputItem margin"
+                  type="text"
+                  id="no13Item"
+                  placeholder="Item 13"
+                  name="no13Item"
+                  value={formData.no13Item}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  className="inputQty"
+                  type="text"
+                  id="qty13"
+                  placeholder="Qty 13"
+                  name="qty13"
+                  value={formData.qty13}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  className="inputRate"
+                  type="text"
+                  id="no13Rate"
+                  placeholder="Rate 13"
+                  name="no13Rate"
+                  value={formData.no13Rate}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+            {/* 14 */}
+            <div className="display-inline ">
+              <div className="form-group">
+                <input
+                  className="inputItem margin"
+                  type="text"
+                  id="no14Item"
+                  placeholder="Item 14"
+                  name="no14Item"
+                  value={formData.no14Item}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  className="inputQty"
+                  type="text"
+                  id="qty14"
+                  placeholder="Qty 14"
+                  name="qty14"
+                  value={formData.qty14}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  className="inputRate"
+                  type="text"
+                  id="no14Rate"
+                  placeholder="Rate 14"
+                  name="no14Rate"
+                  value={formData.no14Rate}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+            {/* 15 */}
+            <div className="display-inline ">
+              <div className="form-group">
+                <input
+                  className="inputItem margin"
+                  type="text"
+                  id="no15Item"
+                  placeholder="Item 15"
+                  name="no15Item"
+                  value={formData.no15Item}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  className="inputQty"
+                  type="text"
+                  id="qty15"
+                  name="qty15"
+                  placeholder="Qty 15"
+                  value={formData.qty15}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  className="inputRate"
+                  type="text"
+                  id="no15Rate"
+                  placeholder="Rate 15"
+                  name="no15Rate"
+                  value={formData.no15Rate}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
+        {formData.no15Rate != "" ? (
+          <div>
+            {/* 16 */}
+            <div className="display-inline ">
+              <div className="form-group">
+                <input
+                  className="inputItem margin"
+                  type="text"
+                  id="no16Item"
+                  placeholder="Item 16"
+                  name="no16Item"
+                  value={formData.no16Item}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  className="inputQty"
+                  type="text"
+                  id="qty16"
+                  name="qty16"
+                  placeholder="Qty 16"
+                  value={formData.qty16}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  className="inputRate"
+                  type="text"
+                  placeholder="Rate 16"
+                  id="no16Rate"
+                  name="no16Rate"
+                  value={formData.no16Rate}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+            {/* 17 */}
+            <div className="display-inline ">
+              <div className="form-group">
+                <input
+                  className="inputItem margin"
+                  type="text"
+                  id="no17Item"
+                  placeholder="Item 17"
+                  name="no17Item"
+                  value={formData.no17Item}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  className="inputQty"
+                  type="text"
+                  id="qty17"
+                  name="qty17"
+                  placeholder="Qty 17"
+                  value={formData.qty17}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  className="inputRate"
+                  type="text"
+                  id="no17Rate"
+                  placeholder="Rate 17"
+                  name="no17Rate"
+                  value={formData.no17Rate}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+            {/* 18 */}
+            <div className="display-inline ">
+              <div className="form-group">
+                <input
+                  className="inputItem margin"
+                  type="text"
+                  id="no18Item"
+                  placeholder="Item 18"
+                  name="no18Item"
+                  value={formData.no18Item}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  className="inputQty"
+                  type="text"
+                  id="qty18"
+                  placeholder="Qty 18"
+                  name="qty18"
+                  value={formData.qty18}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  className="inputRate"
+                  type="text"
+                  id="no18Rate"
+                  name="no18Rate"
+                  placeholder="Rate 18"
+                  value={formData.no18Rate}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+            {/* 19 */}
+            <div className="display-inline ">
+              <div className="form-group">
+                <input
+                  className="inputItem margin"
+                  type="text"
+                  id="no19Item"
+                  placeholder="Item 19"
+                  name="no19Item"
+                  value={formData.no19Item}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  className="inputQty"
+                  type="text"
+                  id="qty19"
+                  placeholder="Qty 19"
+                  name="qty19"
+                  value={formData.qty19}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  className="inputRate"
+                  type="text"
+                  id="no19Rate"
+                  placeholder="Rate 19"
+                  name="no19Rate"
+                  value={formData.no19Rate}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+            {/* 20 */}
+            <div className="display-inline ">
+              <div className="form-group">
+                <input
+                  className="inputItem margin"
+                  type="text"
+                  id="no20Item"
+                  placeholder="Item 20"
+                  name="no20Item"
+                  value={formData.no20Item}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  className="inputQty"
+                  type="text"
+                  id="qty20"
+                  name="qty20"
+                  placeholder="Qty 20"
+                  value={formData.qty20}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  className="inputRate"
+                  type="text"
+                  id="no20Rate"
+                  placeholder="Rate 20 "
+                  name="no20Rate"
+                  value={formData.no20Rate}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
 
         <button type="submit" className="submit-button margin">
           Download
